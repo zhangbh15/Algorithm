@@ -33,6 +33,7 @@ import java.util.*;
  * The values of words are distinct.
  */
 public class LC0212 {
+    // k passes dfs, like Word Search I. (k is the size of words)
     public List<String> findWords(char[][] board, String[] words) {
         List<String> res = new LinkedList<>();
         if (board == null || board.length == 0
@@ -92,5 +93,77 @@ public class LC0212 {
 
         visited[i][j] = false;
         return found;
+    }
+
+
+    // Trie solution
+    static private class TrieNode {
+        char val;
+        String word;
+        TrieNode[] children;
+
+        public TrieNode(char val) {
+            this.val = val;
+            word = null;
+            children = new TrieNode[26];
+        }
+    }
+
+    public List<String> findWordsTrie(char[][] board, String[] words) {
+        List<String> res = new LinkedList<>();
+        if (board == null || board.length == 0
+                || board[0] == null || board[0].length == 0
+                || words == null || words.length == 0) {
+            return res;
+        }
+
+        TrieNode root = new TrieNode('\0');
+        for (String str : words) {
+            TrieNode cur = root;
+            char[] chars = str.toCharArray();
+            for (char ch : chars) {
+                int idx = ch - 'a';
+                if (cur.children[idx] == null) {
+                    cur.children[idx] = new TrieNode(ch);
+                }
+                cur = cur.children[idx];
+            }
+            cur.word = str;
+        }
+
+        int rows = board.length;
+        int cols = board[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                helper(i, j, root, visited, board, res);
+            }
+        }
+
+        return res;
+    }
+
+    private void helper(int i, int j, TrieNode cur, boolean[][] visited, char[][] board, List<String> res) {
+        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j]) {
+            return;
+        }
+        int idx = board[i][j] - 'a';
+        if (cur.children[idx] == null) {
+            return;
+        }
+
+        cur = cur.children[idx];
+        if (cur.word != null) {
+            res.add(cur.word);
+            cur.word = null;
+        }
+        visited[i][j] = true;
+        for (int[] dir : DIRECTIONS) {
+            int ii = i + dir[0];
+            int jj = j + dir[1];
+            helper(ii, jj, cur, visited, board, res);
+        }
+        visited[i][j] = false;
     }
 }
