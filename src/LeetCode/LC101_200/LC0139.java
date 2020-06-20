@@ -1,5 +1,9 @@
 package LeetCode.LC101_200;
 
+import LeetCode.LC201_300.LC0211;
+
+import java.util.*;
+
 /**
  * Word Break
  *
@@ -30,4 +34,42 @@ package LeetCode.LC101_200;
  * Output: false
  */
 public class LC0139 {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        if (s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0) {
+            return false;
+        }
+
+        Set<String> dict = new HashSet<>(wordDict);
+        boolean[] visited = new boolean[s.length()];
+        return dfs(0, s, dict, visited);
+    }
+
+    private boolean dfs(int idx, String str, Set<String> dict, boolean[] visited) {
+        if (idx == str.length()) {
+            return true;
+        }
+
+        if (visited[idx]) {
+            return false;
+        }
+
+        for (int i = idx + 1; i <= str.length(); i++) {
+            if (dict.contains(str.substring(idx, i))) {
+                if (dfs(i, str, dict, visited)) {
+                    return true;
+                }
+            }
+        }
+        visited[idx] = true;
+        return false;
+    }
+
+    // TODO: DP
+
+    public static void main(String[] args) {
+        LC0139 so = new LC0139();
+        String str = "leetcode";
+        List<String> dict = Arrays.asList("leet", "code");
+        System.out.println(so.wordBreak(str, dict));
+    }
 }
