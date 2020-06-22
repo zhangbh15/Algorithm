@@ -64,12 +64,55 @@ public class LC0139 {
         return false;
     }
 
-    // TODO: DP
+
+    public boolean wordBreakDP(String s, List<String> wordDict) {
+        if (s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0) {
+            return false;
+        }
+
+        int len = s.length();
+        boolean[] dp = new boolean[len + 1];
+        dp[len] = true;
+        Set<String> dict = new HashSet<>(wordDict);
+
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = i + 1; j <= len; j++) {
+                dp[i] = dp[j] && dict.contains(s.substring(i, j));
+                if (dp[i]) {
+                    break;
+                }
+            }
+        }
+
+        return dp[0];
+    }
+
+    public boolean wordBreakDP2(String s, List<String> wordDict) {
+        if (s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0) {
+            return false;
+        }
+
+        int len = s.length();
+        boolean[] dp = new boolean[len + 1];
+        dp[0] = true;
+        Set<String> dict = new HashSet<>(wordDict);
+
+        for (int i = 1; i <= len; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[i] = dp[j] && dict.contains(s.substring(j, i));
+                if (dp[i]) {
+                    break;
+                }
+            }
+        }
+
+        return dp[len];
+    }
 
     public static void main(String[] args) {
         LC0139 so = new LC0139();
         String str = "leetcode";
         List<String> dict = Arrays.asList("leet", "code");
-        System.out.println(so.wordBreak(str, dict));
+        System.out.println(so.wordBreakDP(str, dict));
     }
 }
