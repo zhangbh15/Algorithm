@@ -42,37 +42,95 @@ import java.util.*;
  * the gap between the 5th and 6th stone is too large.
  */
 public class LC0403 {
-
-
-
-    private boolean dfs(int[] stones, int idx, int k, HashMap<Integer, Boolean>[] mem) {
-        int len = stones.length;
-        if (idx == len - 1) {
+    public boolean canCross(int[] stones) {
+        if (stones == null || stones.length < 1) {
+            return false;
+        }
+        if (stones.length == 1) {
             return true;
         }
-//        if (idx >= len) {
-//            return false;
-//        }
-        HashMap<Integer, Boolean> map = mem[idx];
-        Boolean ret = map.get(k);
-        if (ret != null) {
-            return ret;
+        if (stones[1] - stones[0] != 1) {
+            return false;
         }
 
-        for (int i = idx + 1; i < len; i++) {
-            int distance = stones[i] - stones[idx];
-            if (distance < k - 1) {
+        int len = stones.length;
+        Map<Integer, Boolean>[] mem = new HashMap[len];
+        for (int i = 0; i < len; i++) {
+            mem[i] = new HashMap<>();
+        }
+
+        return dfs(1, 1, stones, mem);
+    }
+
+    private boolean dfs(int k, int idx, int[] stones, Map<Integer, Boolean>[] mem) {
+        if (idx == stones.length - 1) {
+            return true;
+        }
+
+        Map<Integer, Boolean> map = mem[idx];
+        if (map.containsKey(k)) {
+            return map.get(k);
+        }
+
+        for (int i = idx + 1; i < stones.length; i++) {
+            int step = stones[i] - stones[idx];
+            if (step < k - 1) {
                 continue;
-            } else if (distance > k + 1) {
+            }
+            if (step > k + 1) {
                 break;
-            } else {
-                if (dfs(stones, i, distance, mem)) {
-                    map.put(k, true);
-                    return true;
+            }
+
+            if (dfs(step, i, stones, mem)) {
+                map.put(k, true);
+                return true;
+            }
+        }
+
+        map.put(k, false);
+        return false;
+    }
+
+    public boolean canCrossDP(int[] stones) {
+        if (stones == null || stones.length < 1) {
+            return false;
+        }
+        if (stones.length == 1) {
+            return true;
+        }
+        if (stones[1] - stones[0] != 1) {
+            return false;
+        }
+
+        int len = stones.length;
+        Map<Integer, Integer> map = new HashMap<>(); // From stone position to array index
+        for (int i = 0; i < len; i++) {
+            map.put(stones[i], i);
+        }
+
+        boolean[][] dp = new boolean[len][len];
+        dp[0][1] = true;
+
+        int maxK = 1;
+        for (int i = 1; i < len; i++) {
+            for (int k = 1; k <= Math.min(len - 1, maxK + 1); k++) {
+                for (int j = k - 1; j <= Math.min(k + 1, len - 1); j++) {
+                    int prev = stones[i] - j;
+                    if (map.containsKey(prev) && dp[map.get(prev)][j]) {
+                        dp[i][k] = true;
+                        maxK = Math.max(maxK, k);
+                        break;
+                    }
                 }
             }
         }
-        map.put(k, false);
+
+        for (int i = 0; i <= maxK; i++) {
+            if (dp[len - 1][i]) {
+                return true;
+            }
+        }
+
         return false;
     }
 }
