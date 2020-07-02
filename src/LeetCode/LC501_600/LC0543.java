@@ -1,6 +1,6 @@
 package LeetCode.LC501_600;
 
-import LeetCode.TreeNode;
+import LeetCode.Util.TreeNode;
 
 /**
  * Diameter of Binary Tree

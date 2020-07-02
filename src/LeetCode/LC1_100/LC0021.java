@@ -1,6 +1,6 @@
 package LeetCode.LC1_100;
 
-import LeetCode.ListNode;
+import LeetCode.Util.ListNode;
 
 /**
  * Merge Two Sorted Lists

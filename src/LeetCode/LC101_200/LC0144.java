@@ -1,7 +1,7 @@
 package LeetCode.LC101_200;
 
 import java.util.*;
-import LeetCode.TreeNode;
+import LeetCode.Util.TreeNode;
 
 /**
  * Binary Tree Preorder Traversal

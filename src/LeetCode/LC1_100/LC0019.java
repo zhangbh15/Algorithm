@@ -1,7 +1,6 @@
 package LeetCode.LC1_100;
 
-import LeetCode.ListNode;
-import java.util.*;
+import LeetCode.Util.ListNode;
 
 /**
  * Remove Nth Node From End of List

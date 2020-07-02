@@ -1,6 +1,6 @@
 package LeetCode.LC101_200;
 
-import LeetCode.TreeNode;
+import LeetCode.Util.TreeNode;
 
 import java.util.LinkedList;
 import java.util.Queue;

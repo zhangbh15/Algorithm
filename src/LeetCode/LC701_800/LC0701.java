@@ -1,6 +1,6 @@
 package LeetCode.LC701_800;
 
-import LeetCode.TreeNode;
+import LeetCode.Util.TreeNode;
 
 /**
  * Insert into a Binary Search Tree

@@ -1,7 +1,7 @@
 package LeetCode.LC501_600;
 
 import java.util.*;
-import LeetCode.TreeNode;
+import LeetCode.Util.TreeNode;
 
 /**
  * Boundary of Binary Tree

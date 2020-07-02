@@ -1,6 +1,6 @@
 package LeetCode.LC201_300;
 
-import LeetCode.ListNode;
+import LeetCode.Util.ListNode;
 /**
  * Reverse LinkedList
  *

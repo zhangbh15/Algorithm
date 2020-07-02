@@ -1,6 +1,6 @@
 package LeetCode.LC601_700;
 
-import LeetCode.TreeNode;
+import LeetCode.Util.TreeNode;
 
 import java.util.Stack;
 

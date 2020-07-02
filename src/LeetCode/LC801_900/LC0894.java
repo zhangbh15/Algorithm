@@ -1,5 +1,5 @@
 package LeetCode.LC801_900;
-import LeetCode.TreeNode;
+import LeetCode.Util.TreeNode;
 import java.util.*;
 
 /**

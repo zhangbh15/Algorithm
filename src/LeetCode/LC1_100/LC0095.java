@@ -1,6 +1,6 @@
 package LeetCode.LC1_100;
 import java.util.*;
-import LeetCode.TreeNode;
+import LeetCode.Util.TreeNode;
 
 /**
  * Unique Binary Search Trees II

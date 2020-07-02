@@ -1,4 +1,4 @@
-package LeetCode;
+package LeetCode.Util;
 import LeetCode.LC201_300.LC0297;
 
 import java.util.*;

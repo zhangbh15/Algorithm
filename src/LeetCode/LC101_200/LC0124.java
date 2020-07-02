@@ -1,6 +1,6 @@
 package LeetCode.LC101_200;
 
-import LeetCode.TreeNode;
+import LeetCode.Util.TreeNode;
 
 /**
  * Binary Tree Maximum Path Sum
