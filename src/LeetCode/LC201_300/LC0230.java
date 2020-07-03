@@ -1,6 +1,6 @@
 package LeetCode.LC201_300;
 
-import LeetCode.Util.TreeNode;
+import LeetCode.util.TreeNode;
 import java.util.*;
 
 /**

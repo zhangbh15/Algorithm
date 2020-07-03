@@ -1,7 +1,7 @@
 package LeetCode.LC101_200;
 import java.util.*;
-import LeetCode.Util.TreeNode;
-import LeetCode.Util.ListNode;
+import LeetCode.util.TreeNode;
+import LeetCode.util.ListNode;
 
 /**
  * Convert Sorted List to Binary Search Tree

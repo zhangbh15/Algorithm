@@ -1,5 +1,5 @@
 package LeetCode.LC401_500;
-import LeetCode.Util.TreeNode;
+import LeetCode.util.TreeNode;
 
 import java.util.LinkedList;
 import java.util.List;

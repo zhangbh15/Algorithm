@@ -1,7 +1,7 @@
 package LeetCode.LC101_200;
 
 import java.util.*;
-import LeetCode.Util.TreeNode;
+import LeetCode.util.TreeNode;
 
 /**
  * Binary Tree Right Side View

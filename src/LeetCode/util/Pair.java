@@ -1,4 +1,4 @@
-package LeetCode.Util;
+package LeetCode.util;
 
 public class Pair<K, V> {
     private K key;

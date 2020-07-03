@@ -1,5 +1,5 @@
 package LeetCode.LC501_600;
-import LeetCode.Util.TreeNode;
+import LeetCode.util.TreeNode;
 
 /**
  * Binary Tree Longest Consecutive Sequence II

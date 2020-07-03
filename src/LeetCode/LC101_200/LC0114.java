@@ -1,6 +1,6 @@
 package LeetCode.LC101_200;
 
-import LeetCode.Util.TreeNode;
+import LeetCode.util.TreeNode;
 
 /**
  * Flatten Binary Tree to Linked List

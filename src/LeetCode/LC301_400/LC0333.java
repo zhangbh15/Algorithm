@@ -1,5 +1,5 @@
 package LeetCode.LC301_400;
-import LeetCode.Util.TreeNode;
+import LeetCode.util.TreeNode;
 
 /**
  * Largest BST Subtree

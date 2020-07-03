@@ -1,6 +1,6 @@
 package LeetCode.LC1_100;
 
-import LeetCode.Util.ListNode;
+import LeetCode.util.ListNode;
 
 /**
  * Add Two Numbers

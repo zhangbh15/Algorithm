@@ -1,4 +1,4 @@
-package LeetCode.Util;
+package LeetCode.util;
 
 class V {
     int id;

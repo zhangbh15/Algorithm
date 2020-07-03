@@ -1,7 +1,7 @@
 package LeetCode.LC301_400;
 
-import LeetCode.Util.Pair;
-import LeetCode.Util.TreeNode;
+import LeetCode.util.Pair;
+import LeetCode.util.TreeNode;
 import java.util.*;
 
 /**
