@@ -87,7 +87,7 @@ public class LC0210 {
     public static void main(String[] args) {
         LC0210 so = new LC0210();
         int numCourses = 4;
-        int[][] prerequisites = new int[][] {{1, 0}, {2, 0}, {3, 1}, {3, 2}};
+        int[][] prerequisites = {{1, 0}, {2, 0}, {3, 1}, {3, 2}};
         int[] res = so.findOrder(numCourses, prerequisites);
         System.out.println(Arrays.toString(res));
     }
