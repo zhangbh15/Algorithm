@@ -1,6 +1,6 @@
 package OOD;
 
-public class Singleton {
+public final class Singleton {
     private static Singleton instance;
 
     private Singleton() {
