@@ -114,4 +114,34 @@ public class LC0295 {
             }
         }
     }
+
+    private static class MedianFinderTwoHeap {
+        private final PriorityQueue<Integer> small;
+        private final PriorityQueue<Integer> large;
+
+        /** initialize your data structure here. */
+        public MedianFinderTwoHeap() {
+            small = new PriorityQueue<>();
+            large = new PriorityQueue<>((Comparator.reverseOrder()));
+        }
+
+        // O(3logN)
+        public void addNum(int num) {
+            small.add(num);
+            large.add(small.poll());
+
+            if (large.size() > small.size()) { // small.size == large.size || small.size == large.size + 1
+                small.add(large.poll());
+            }
+        }
+
+        // O(1)
+        public double findMedian() {
+            if (small.isEmpty()) {
+                return 0;
+            }
+
+            return small.size() > large.size() ? small.peek() : (double) (small.peek() + large.peek()) / 2;
+        }
+    }
 }
