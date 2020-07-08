@@ -17,4 +17,8 @@ public final class Singleton {
         }
         return instance;
     }
+
+    public static void main(String[] args) {
+        Singleton test = Singleton.getInstance();
+    }
 }
