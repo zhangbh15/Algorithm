@@ -27,7 +27,7 @@ public class LC0056 {
             return new int[][] {};
         }
 
-        Arrays.sort(intervals, (o1, o2) -> o1[0] - o2[0]);
+        Arrays.sort(intervals, Comparator.comparingInt(o -> o[0]));
         int[] prev = intervals[0];
         List<int[]> res = new ArrayList<>();
 
