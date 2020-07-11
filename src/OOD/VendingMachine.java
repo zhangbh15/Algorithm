@@ -4,30 +4,39 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class VendingMachine {
-    private Map<String, Product> map;
-    private Map<PaymentType, Payment> paymentMap;
+    private final Map<String, Product> idToProduct;
 
-    public boolean pay(String productId, PaymentType type, float amount) {
-        Product product = map.get(productId);
-        Payment payment = paymentMap.get(type);
-        VMPayment vmp = new VMPayment(payment, product);
-        return vmp.pay();
+    public VendingMachine() {
+        idToProduct = new HashMap<>();
+    }
+
+
+    public boolean pay(String productId, PaymentType paymentType, double value) {
+        Product product = idToProduct.get(productId);
+        Payment payment = PaymentFactory.getPayment(paymentType);
+        return payment.pay(product, value);
+    }
+
+
+    public void addProduct(String id, Product product) {
+        idToProduct.put(id, product);
+    }
+    public void removeProduct(String id) {
+        idToProduct.remove(id);
     }
 }
 
-class VMPayment {
-    private Payment payment;
-    private Product product;
-
-    public VMPayment(Payment payment, Product product){
-        this.payment = payment;
-        this.product = product;
-    }
-
-    public boolean pay() {
-        return payment.pay(product);
+final class PaymentFactory {
+    public static Payment getPayment(PaymentType paymentType) {
+        switch (paymentType) {
+            case CASH: return new CashPayment();
+            case COIN: return new CoinPayment();
+            case CARD: return new CardPayment();
+            default: throw new IllegalArgumentException("Unsupported payment type.");
+        }
     }
 }
+
 
 enum PaymentType {
     CASH,
@@ -36,38 +45,53 @@ enum PaymentType {
 }
 
 interface Payment {
-    boolean pay(Product product);
+    boolean pay(Product product, double value);
 }
 
-class CoinPayment implements Payment {
+final class CashPayment implements Payment {
     @Override
-    public boolean pay(Product product) {
-        return false;
+    public boolean pay(Product product, double value) {
+        // process cash payment
+        return value >= product.getPrice();
     }
 }
 
-class CashPayment implements Payment {
+final class CoinPayment implements Payment {
     @Override
-    public boolean pay(Product product) {
-        return false;
+    public boolean pay(Product product, double value) {
+        // process coin payment
+        return value >= product.getPrice();
     }
 }
 
-class CardPayment implements Payment {
+final class CardPayment implements Payment {
     @Override
-    public boolean pay(Product product) {
-        return false;
+    public boolean pay(Product product, double value) {
+        // process card payment
+        return value >= product.getPrice();
     }
 }
 
-class Product {
+final class Product {
     private final String id;
-    private final float price;
+    private final double price;
     private final String name;
 
     public Product(String id, float price, String name) {
         this.id = id;
         this.price = price;
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getName() {
+        return name;
     }
 }
