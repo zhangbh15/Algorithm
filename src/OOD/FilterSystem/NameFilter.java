@@ -2,9 +2,9 @@ package OOD.FilterSystem;
 
 import java.io.File;
 
-public final class SizeFilter implements FilterCondition {
+public final class NameFilter implements FilterCondition {
     @Override
     public boolean filter(File file, FilterParameters fp) {
-        return file.length() == fp.getSize();
+        return file.getName().equals(fp.getName());
     }
 }

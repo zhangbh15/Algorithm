@@ -3,16 +3,11 @@ package OOD.FilterSystem;
 import java.util.Date;
 
 public final class FilterParameters {
-    private String suffix;
-    private Date updated;
+    private String name;
     private long size;
 
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public Date getUpdated() {
-        return updated;
+    public String getName() {
+        return name;
     }
 
     public long getSize() {
