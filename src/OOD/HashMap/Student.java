@@ -28,6 +28,12 @@ public class Student {
         return this.getId().equals(other.getId());
     }
 
+    @Override
+    public String toString() {
+        return "Student: id=" + getId()
+                + ", First Name=" + getFirstName()
+                + ", Last Name=" + getLastName();
+    }
 
 
     public String getId() {
