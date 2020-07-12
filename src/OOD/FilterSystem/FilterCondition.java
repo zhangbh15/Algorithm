@@ -2,6 +2,11 @@ package OOD.FilterSystem;
 
 import java.io.File;
 
-public interface FilterCondition {
-    boolean filter(File file, FilterParameters fp);
+public abstract class FilterCondition {
+    protected FilterParameters filterParam;
+    public FilterCondition(FilterParameters filterParam) {
+        this.filterParam = filterParam;
+    }
+
+    abstract boolean filter(File file);
 }

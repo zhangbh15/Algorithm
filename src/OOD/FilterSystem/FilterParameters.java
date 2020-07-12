@@ -1,7 +1,5 @@
 package OOD.FilterSystem;
 
-import java.util.Date;
-
 public final class FilterParameters {
     private String name;
     private long size;

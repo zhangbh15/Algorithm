@@ -15,20 +15,21 @@ public abstract class FilterTreeNode {
         this.right = null;
     }
 
-    public FilterTreeNode(FilterTreeOperator operator, FilterTreeNode left, FilterTreeNode right) {
+    public FilterTreeNode(FilterTreeOperator operator,
+                          FilterTreeNode left, FilterTreeNode right) {
         this.condition = null;
         this.operator = operator;
         this.left = left;
         this.right = right;
     }
 
-    public boolean eval(File file, FilterParameters fp) {
+    public boolean eval(File file) {
         if (this.condition != null) {
-            return this.condition.filter(file, fp);
+            return this.condition.filter(file);
         }
 
-        boolean left = this.left.eval(file, fp);
-        boolean right = this.right.eval(file, fp);
+        boolean left = this.left.eval(file);
+        boolean right = this.right.eval(file);
 
         return this.operator.eval(left, right);
     }

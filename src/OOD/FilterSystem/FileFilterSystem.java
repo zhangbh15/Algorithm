@@ -9,14 +9,14 @@ import java.util.*;
  */
 public final class FileFilterSystem {
     // Single filter condition
-    public List<File> filter(List<File> files, FilterCondition fc, FilterParameters fp) {
+    public List<File> filter(List<File> files, FilterCondition filterCond) {
         List<File> res = new LinkedList<>();
         if (files == null || files.size() == 0) {
             return res;
         }
 
         for (File f : files) {
-            if (fc.filter(f, fp)) {
+            if (filterCond.filter(f)) {
                 res.add(f);
             }
         }
@@ -24,14 +24,14 @@ public final class FileFilterSystem {
     }
 
     // Combo filter conditions
-    public List<File> filter(List<File> files, FilterTreeNode root, FilterParameters fp) {
+    public List<File> filter(List<File> files, FilterTreeNode root) {
         List<File> res = new LinkedList<>();
         if (files == null || files.size() == 0) {
             return res;
         }
 
         for (File f : files) {
-            if (root.eval(f, fp)) {
+            if (root.eval(f)) {
                 res.add(f);
             }
         }
