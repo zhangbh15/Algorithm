@@ -34,14 +34,15 @@ public final class MyMap<K, V> {
         this(DEFAULT_CAPACITY);
     }
     public MyMap(int capacity) {
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("Invalid capacity.");
+        }
+
         this.capacity = capacity;
         this.size = 0;
         this.buckets = (List<Cell<K, V>>[]) new List[capacity];
     }
 
-    private int hashFunction(K key) {
-        return key == null ? 0 : Math.abs(key.hashCode() % this.capacity);
-    }
 
     public V put(K key, V val) {
         if (this.size >= this.capacity * LOAD_FACTOR) {
@@ -123,4 +124,9 @@ public final class MyMap<K, V> {
     public int size() {
         return this.size;
     }
+
+    private int hashFunction(K key) {
+        return key == null ? 0 : Math.abs(key.hashCode() % this.capacity);
+    }
+
 }
