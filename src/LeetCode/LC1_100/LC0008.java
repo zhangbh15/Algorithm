@@ -55,6 +55,40 @@ package LeetCode.LC1_100;
  */
 public class LC0008 {
     public int myAtoi(String str) {
+        if (str == null || str.length() ==0) {
+            return 0;
+        }
 
+        char[] chars = str.toCharArray();
+        int len = chars.length;
+
+        int i = 0;
+        while (i < len && chars[i] == ' ') {
+            i++;
+        }
+
+        if (i == len) {
+            return 0;
+        }
+
+        int sign = 1;
+        if (chars[i] == '+') {
+            i++;
+        } else if (chars[i] == '-') {
+            sign = -1;
+            i++;
+        }
+
+        long val = 0;
+        while (i < len && chars[i] >= '0' && chars[i] <= '9') {
+            val = val * 10 + (chars[i] - '0');
+            i++;
+            if (val > Integer.MAX_VALUE) {
+                break;
+            }
+        }
+
+        val *= sign;
+        return (int) Math.max(Math.min(val, Integer.MAX_VALUE), Integer.MIN_VALUE);
     }
 }
