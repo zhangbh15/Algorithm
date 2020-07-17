@@ -1,9 +1,6 @@
 package OOD.HashMap;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class TestClass {
+public class MyMapTest {
     public static void main(String[] args) {
         MyMap<Student, String> map = new MyMap<>(2);
 

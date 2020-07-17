@@ -1,8 +1,11 @@
 package OOD.HashMap;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
-public final class MyMap<K, V> {
+public final class MultiMap<K, V> {
     private static class Cell<K, V> {
         private final K key;
         private V val;
@@ -28,23 +31,23 @@ public final class MyMap<K, V> {
 
     private int capacity;
     private int size;
-    private List<Cell<K, V>>[] buckets;
+    private List<Cell<K, List<V>>>[] buckets;
 
-    public MyMap() {
+    public MultiMap() {
         this(DEFAULT_CAPACITY);
     }
-    public MyMap(int capacity) {
+    public MultiMap(int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("Invalid capacity.");
         }
 
         this.capacity = capacity;
         this.size = 0;
-        this.buckets = (List<Cell<K, V>>[]) new List[capacity];
+        this.buckets = (List<Cell<K, List<V>>>[]) new List[capacity];
     }
 
 
-    public V put(K key, V val) {
+    public void put(K key, V val) {
         if (this.size >= this.capacity * LOAD_FACTOR) {
             rehashing();
         }
@@ -54,28 +57,28 @@ public final class MyMap<K, V> {
             this.buckets[idx] = new ArrayList<>();
         }
 
-        List<Cell<K, V>> bucket = this.buckets[idx];
-        for (Cell<K, V> c : bucket) {
+        List<Cell<K, List<V>>> bucket = this.buckets[idx];
+        for (Cell<K, List<V>> c : bucket) {
             if (Objects.equals(c.getKey(), key)) {
-                V preVal = c.getVal();
-                c.setVal(val);
-                return preVal;
+                c.getVal().add(val);
+                return;
             }
         }
 
-        bucket.add(new Cell<>(key, val));
+        Cell<K, List<V>> addCell = new Cell<>(key, new ArrayList<>());
+        addCell.getVal().add(val);
+        bucket.add(addCell);
         this.size++;
-        return null;
     }
 
-    public V get(K key) {
+    public List<V> get(K key) {
         int idx = hashFunction(key);
-        List<Cell<K, V>> bucket = this.buckets[idx];
+        List<Cell<K, List<V>>> bucket = this.buckets[idx];
         if (bucket == null) {
             return null;
         }
 
-        for (Cell<K, V> c : bucket) {
+        for (Cell<K, List<V>> c : bucket) {
             if (Objects.equals(c.getKey(), key)) {
                 return c.getVal();
             }
@@ -85,7 +88,7 @@ public final class MyMap<K, V> {
 
     public boolean remove(K key) {
         int idx = hashFunction(key);
-        List<Cell<K, V>> bucket = this.buckets[idx];
+        List<Cell<K, List<V>>> bucket = this.buckets[idx];
         if (bucket == null) {
             return false;
         }
@@ -102,6 +105,22 @@ public final class MyMap<K, V> {
         return false;
     }
 
+    public MyMap<K, List<V>> asMap() {
+        MyMap<K, List<V>> ret = new MyMap<>();
+
+        for (List<Cell<K, List<V>>> bucket : this.buckets) {
+            if (bucket == null) {
+                continue;
+            }
+
+            for (Cell<K, List<V>> c : bucket) {
+                ret.put(c.getKey(), c.getVal());
+            }
+        }
+
+        return ret;
+    }
+
     public int size() {
         return this.size;
     }
@@ -110,13 +129,14 @@ public final class MyMap<K, V> {
 
     private void rehashing() {
         this.capacity <<= 1;
-        List<Cell<K, V>>[] newBuckets = (List<Cell<K, V>>[]) new List[this.capacity];
-        for (List<Cell<K, V>> bucket : this.buckets) {
+        List<Cell<K, List<V>>>[] newBuckets = (List<Cell<K, List<V>>>[]) new List[this.capacity];
+
+        for (List<Cell<K, List<V>>> bucket : this.buckets) {
             if (bucket == null) {
                 continue;
             }
 
-            for (Cell<K, V> c : bucket) {
+            for (Cell<K, List<V>> c : bucket) {
                 int idx = hashFunction(c.getKey());
                 if (newBuckets[idx] == null) {
                     newBuckets[idx] = new ArrayList<>();

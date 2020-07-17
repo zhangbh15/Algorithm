@@ -1,7 +1,7 @@
 package OOD.HashMap;
 
 public class Student {
-    private String id;
+    private final String id;
     private String firstName, lastName;
 
     public Student(String id) {
