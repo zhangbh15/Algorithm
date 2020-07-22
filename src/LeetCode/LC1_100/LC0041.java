@@ -50,6 +50,24 @@ public class LC0041 {
         return len + 1;
     }
 
+    public int firstMissingPositiveBit(int[] nums) {
+        int length = nums.length;
+        int[] bit = new int[(length - 1) / 32 + 1];
+
+        for (int digit : nums) {
+            if (digit >= 1 && digit <= length) {
+                int index = (digit - 1) / 32;
+                bit[index] |= (1 << ((digit - 1) % 32));
+            }
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if ((bit[i / 32] & (1 << (i % 32))) == 0)
+                return i + 1;
+        }
+        return length + 1;
+    }
+
     public static void main(String[] args) {
         LC0041 so = new LC0041();
         int[] array = {3, 4, -1, 1};
