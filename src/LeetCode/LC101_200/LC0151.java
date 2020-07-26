@@ -30,7 +30,7 @@ package LeetCode.LC101_200;
  * You need to reduce multiple spaces between two words to a single space in the reversed string.
  *
  */
-public class LC151 {
+public class LC0151 {
     public String reverseWords(String s) {
         if (s == null || s.length() == 0) {
             return s;
