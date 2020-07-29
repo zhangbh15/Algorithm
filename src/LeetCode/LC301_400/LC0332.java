@@ -28,6 +28,53 @@ import java.util.*;
  */
 public class LC0332 {
     public List<String> findItinerary(List<List<String>> tickets) {
-        return null;
+        List<String> res = new ArrayList<>();
+        if (tickets == null || tickets.size() == 0) {
+            return res;
+        }
+
+        Map<String, List<String>> map = new HashMap<>();
+        for (List<String> ticket : tickets) {
+            String departure = ticket.get(0);
+            String arrival = ticket.get(1);
+
+            if (!map.containsKey(departure)) {
+                map.put(departure, new LinkedList<>());
+            }
+            map.get(departure).add(arrival); // may contain duplicate
+        }
+
+        for (List<String> arrivals : map.values()) {
+            Collections.sort(arrivals);
+        }
+
+        String cur = "JFK";
+        res.add(cur);
+        while (!map.isEmpty()) {
+            List<String> arrivals = map.get(cur);
+            String arrival = arrivals.remove(0);
+            res.add(arrival);
+
+            if (arrivals.isEmpty()) {
+                map.remove(cur);
+            }
+
+            cur = arrival;
+        }
+
+        return res;
+    }
+
+    public static void main(String[] args) {
+        LC0332 so = new LC0332();
+        List<List<String>> input = new ArrayList<>();
+        input.add(Arrays.asList("JFK","SFO"));
+        input.add(Arrays.asList("JFK","ATL"));
+        input.add(Arrays.asList("SFO","ATL"));
+        input.add(Arrays.asList("ATL","JFK"));
+        input.add(Arrays.asList("ATL","SFO"));
+
+        List<String> res = so.findItinerary(input);
+        System.out.println(res);
     }
 }
