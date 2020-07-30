@@ -33,34 +33,7 @@ public class LC0332 {
             return res;
         }
 
-        Map<String, List<String>> map = new HashMap<>();
-        for (List<String> ticket : tickets) {
-            String departure = ticket.get(0);
-            String arrival = ticket.get(1);
 
-            if (!map.containsKey(departure)) {
-                map.put(departure, new LinkedList<>());
-            }
-            map.get(departure).add(arrival); // may contain duplicate
-        }
-
-        for (List<String> arrivals : map.values()) {
-            Collections.sort(arrivals);
-        }
-
-        String cur = "JFK";
-        res.add(cur);
-        while (!map.isEmpty()) {
-            List<String> arrivals = map.get(cur);
-            String arrival = arrivals.remove(0);
-            res.add(arrival);
-
-            if (arrivals.isEmpty()) {
-                map.remove(cur);
-            }
-
-            cur = arrival;
-        }
 
         return res;
     }
