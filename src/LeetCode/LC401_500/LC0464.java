@@ -1,6 +1,9 @@
 package LeetCode.LC401_500;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Can I Win
  *
@@ -34,23 +37,85 @@ package LeetCode.LC401_500;
  * Same with other integers chosen by the first player, the second player will always win.
  */
 public class LC0464 {
+    public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
+        if (desiredTotal == 0) {
+            return true;
+        }
+        if (maxChoosableInteger <= 0 || maxChoosableInteger > 20
+                || desiredTotal < 0 || desiredTotal > 300) {
+            return false;
+        }
+        if (maxChoosableInteger * (maxChoosableInteger + 1) / 2 < desiredTotal) {
+            return false;
+        }
+
+        int pool = 0;
+        for (int i = 1; i <= maxChoosableInteger; i++) {
+            pool = (pool + 1) << 1;
+        }
+
+        Map<Integer, Boolean> mem = new HashMap<>();
+
+        return dfs(mem, pool, desiredTotal);
+    }
+
+    private boolean dfs(Map<Integer, Boolean> mem, int pool, int target) {
+        if (target <= 0) {
+            return false; // current player looses
+        }
+        if (pool == 0) {
+            return false;
+        }
+        int hash = pool * 300 + target;
+        if (mem.containsKey(hash)) {
+            return mem.get(hash);
+        }
+
+        for (int i = 1; i <= 20; i++) {
+            int mask = 1 << i;
+            if ((pool & mask) == 0){
+                continue;
+            }
+
+            pool ^= mask;
+            boolean otherWin = dfs(mem, pool, target - i);
+            pool ^= mask;
+            if (!otherWin) {
+                mem.put(hash, true);
+                return true;
+            }
+        }
+
+        mem.put(hash,false);
+        return false;
+    }
+
     private boolean dfs(boolean[] pool, int curSum, int desiredTotal) {
-        if (curSum > desiredTotal) {
+        if (curSum >= desiredTotal) {
             return false;
         }
 
         int len = pool.length;
-        for (int i = 1; i < len; i++) { // len == maxChoosableInt
-            if (pool[i]) {
-                curSum += i; 
-                pool[i] = false;
-                boolean ret = dfs(pool, curSum, desiredTotal);
-                pool[i] = true;
-                if (!ret) {
-                    return true;
-                }
+        for (int i = 1; i < pool.length; i++) {
+            if (!pool[i]) {
+                continue;
+            }
+
+            pool[i] = false;
+            boolean ret = dfs(pool, curSum + i, desiredTotal);
+            pool[i] = true;
+            if (!ret) {
+                return true;
             }
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        LC0464 so = new LC0464();
+        int maxChoosable = 5;
+        int desiredTotal = 50;
+        boolean res = so.canIWin(maxChoosable, desiredTotal);
+        System.out.println(res);
     }
 }
