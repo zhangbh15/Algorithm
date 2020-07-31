@@ -27,7 +27,7 @@ import java.util.*;
  *              But it is larger in lexical order.
  */
 public class LC0332 {
-    // Eula Circuit
+    // Euler Circuit
     public List<String> findItinerary(List<List<String>> tickets) {
         List<String> res = new LinkedList<>();
         if (tickets == null || tickets.size() == 0) {

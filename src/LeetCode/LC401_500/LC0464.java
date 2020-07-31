@@ -42,7 +42,7 @@ public class LC0464 {
         int len = pool.length;
         for (int i = 1; i < len; i++) { // len == maxChoosableInt
             if (pool[i]) {
-                curSum += i;
+                curSum += i; 
                 pool[i] = false;
                 boolean ret = dfs(pool, curSum, desiredTotal);
                 pool[i] = true;
