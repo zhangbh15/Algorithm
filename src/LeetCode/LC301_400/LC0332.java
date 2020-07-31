@@ -27,16 +27,45 @@ import java.util.*;
  *              But it is larger in lexical order.
  */
 public class LC0332 {
+    // Eula Circuit
     public List<String> findItinerary(List<List<String>> tickets) {
-        List<String> res = new ArrayList<>();
+        List<String> res = new LinkedList<>();
         if (tickets == null || tickets.size() == 0) {
             return res;
         }
 
+        Map<String, PriorityQueue<String>> graph = new HashMap<>();
+        for (List<String> ticket : tickets) {
+            String departure = ticket.get(0);
+            String arrival = ticket.get(1);
+            if (!graph.containsKey(departure)) {
+                graph.put(departure, new PriorityQueue<>());
+            }
+            graph.get(departure).offer(arrival);
+        }
 
+        search("JFK", graph, res);
 
         return res;
     }
+
+    private void search(String cur, Map<String, PriorityQueue<String>> graph, List<String> res) {
+        if (!graph.containsKey(cur)) {
+            res.add(0, cur);
+            return;
+        }
+
+        PriorityQueue<String> heap = graph.get(cur);
+        while (!heap.isEmpty()) {
+            String next = heap.poll();
+            search(next, graph, res);
+        }
+
+        graph.remove(cur);
+        res.add(0, cur);
+    }
+
+
 
     public static void main(String[] args) {
         LC0332 so = new LC0332();
