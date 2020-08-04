@@ -31,7 +31,7 @@ public class LC0278 {
             return 0;
         }
 
-        int start = 0;
+        int start = 1;
         int end = n;
         while (start <= end) {
             int mid = start + (end - start) / 2;
