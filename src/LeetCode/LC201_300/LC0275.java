@@ -29,6 +29,30 @@ package LeetCode.LC201_300;
  */
 public class LC0275 {
     public int hIndex(int[] citations) {
-        return -1;
+        if (citations == null || citations.length == 0) {
+            return 0;
+        }
+
+        int len = citations.length;
+        if (citations[len - 1] < 1) {
+            return 0;
+        }
+
+        int start = 0;
+        int end = len - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (len - mid > citations[mid]) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+
+        if (end < 0) {
+            return len;
+        } else {
+            return len - end - 1;
+        }
     }
 }
