@@ -28,6 +28,6 @@ package LeetCode.LC401_500;
  */
 public class LC0410 {
     public int splitArray(int[] nums, int m) {
-
+        return -1;
     }
 }
