@@ -27,7 +27,73 @@ package LeetCode.LC401_500;
  * where the largest sum among the two subarrays is only 18.
  */
 public class LC0410 {
+    // DFS time O(n^m)
     public int splitArray(int[] nums, int m) {
-        return -1;
+        if (nums == null || nums.length == 0 || m < 1 || m > nums.length) {
+            return 0;
+        }
+
+        minSol = Integer.MAX_VALUE;
+        dfs(0, nums, 0, m);
+        return minSol;
+    }
+
+    private int minSol;
+
+    private void dfs(int curMaxSum, int[] array, int startIdx, int numSubarray) {
+        if (numSubarray == 1) {
+            int subarraySum = 0;
+            for (int i = startIdx; i < array.length; i++) {
+                subarraySum += array[i];
+            }
+            curMaxSum = Math.max(curMaxSum, subarraySum);
+            minSol = Math.min(curMaxSum, minSol);
+            return;
+        }
+
+        int subarraySum = 0;
+        for (int i = startIdx; i < array.length - numSubarray + 1; i++) {
+            subarraySum += array[i];
+            dfs(Math.max(curMaxSum, subarraySum), array, i + 1, numSubarray - 1);
+        }
+    }
+
+    // DP time O(n^2*m) space O(m*n)
+
+    // Binary Search + Greedy: time O(n∗log(sumOfArray))
+    public int splitArrayGreedy(int[] nums, int m) {
+        // cc
+        long lowerBound = 0;
+        long upperBound = 0;
+        int len = nums.length;
+        for (int num : nums) {
+            upperBound += num;
+            lowerBound = Math.max(lowerBound, num);
+        }
+
+        long res = upperBound;
+        while (lowerBound <= upperBound) {
+            long mid = lowerBound + (upperBound - lowerBound) / 2;
+            long sum = 0;
+            int cnt = 1;
+            for (int num : nums) {
+                if (sum + num > mid) {
+                    cnt++;
+                    sum = num;
+                } else {
+                    sum += num;
+                }
+            }
+
+            if (cnt <= m) {
+                res = Math.min(res, mid);
+                upperBound = mid - 1;
+            } else {
+                lowerBound = mid + 1;
+            }
+        }
+
+        return (int) res;
     }
 }
+
