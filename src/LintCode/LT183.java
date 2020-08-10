@@ -30,20 +30,37 @@ package LintCode;
  * O(n log Len), where Len is the longest length of the wood.
  */
 public class LT183 {
-//    public int woodCut(int[] woods, int k) {
-//        if (woods == null || woods.length == 0 || k <= 0) return 0;
-//
-//        int start = 1;
-//        int end = avg(woods, k); // min(avg(woods), max(woods));
-//        while (start <= end) {
-//            int mid = start + (end - start) / 2;
-//            if (canCut(woods, k, mid)) {
-//                start = mid + 1;
-//            } else {
-//                end = mid - 1;
-//            }
-//        }
-//
-//        return end;
-//    }
+    public int woodCut(int[] L, int k) {
+        if (L == null || L.length == 0) {
+            return 0;
+        }
+
+        int sum = 0;
+        int longestPiece = 0;
+        for (int wood : L) {
+            sum += wood;
+            longestPiece = Math.max(longestPiece, wood);
+        }
+
+        int min = 1;
+        int max = Math.min(sum / k, longestPiece);
+        while (min <= max) {
+            int mid = min + (max - min) / 2;
+            if (maxPieces(L, mid) >= k) {
+                min = mid + 1;
+            } else {
+                max = mid - 1;
+            }
+        }
+
+        return max;
+    }
+
+    private int maxPieces(int[] woods, int len) {
+        int cnt = 0;
+        for (int wood : woods) {
+            cnt += wood / len;
+        }
+        return cnt;
+    }
 }
