@@ -15,7 +15,7 @@ package LeetCode.LC201_300;
  * You must do this in-place without making a copy of the array.
  * Minimize the total number of operations.
  */
-public class LC283 {
+public class LC0283 {
     public void moveZeroes(int[] nums) {
         if (nums == null || nums.length <= 1) {
             return;
