@@ -30,8 +30,7 @@ public class LC0050 {
         }
 
         if (n < 0) {
-            long longN = (long) n;
-            return helper(1 / x, -longN);
+            return helper(1 / x, -(long) n);
         } else {
             return helper(x, n);
         }
