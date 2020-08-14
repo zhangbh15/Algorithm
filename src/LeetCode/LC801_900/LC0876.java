@@ -30,7 +30,38 @@ import LeetCode.util.ListNode;
  * The number of nodes in the given list will be between 1 and 100.
  */
 public class LC0876 {
-//    public ListNode middleNode(ListNode head) {
-//
-//    }
+    public ListNode middleNode(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        int len = 0;
+        ListNode cur = head;
+        while (cur != null) {
+            len++;
+            cur = cur.next;
+        }
+
+        cur = head;
+        for (int i = 0; i < len / 2; i++) {
+            cur = cur.next;
+        }
+
+        return cur;
+    }
+
+    public ListNode onePass(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
 }
