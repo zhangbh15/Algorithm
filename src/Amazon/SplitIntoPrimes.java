@@ -56,10 +56,12 @@ public class SplitIntoPrimes {
         String str2 = "2222";
         String str3 = "142857";
         String str4 = "13131313131311313131313131313";
+        String str5 = "3175";
 
         System.out.println(so.splitWays(str));
         System.out.println(so.splitWays(str2));
         System.out.println(so.splitWays(str3));
         System.out.println(so.splitWays(str4));
+        System.out.println(so.splitWays(str5));
     }
 }
