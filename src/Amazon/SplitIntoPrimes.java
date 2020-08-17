@@ -16,6 +16,11 @@ public class SplitIntoPrimes {
 
         for (int i = len - 1; i >= 0; i--) {
             int val = 0;
+
+//            if (str.charAt(i) == '0') {
+//                continue;
+//            }
+
             for (int j = i; j < len; j++) {
                 val = val * 10 + str.charAt(j) - '0';
                 if (val < 0) {
@@ -59,6 +64,7 @@ public class SplitIntoPrimes {
         String str5 = "3175";
         String str6 = "10101";
         String str7 = "101101";
+        String str8 = "2013";
 
         System.out.println(so.splitWays(str));
         System.out.println(so.splitWays(str2));
@@ -67,5 +73,6 @@ public class SplitIntoPrimes {
         System.out.println(so.splitWays(str5));
         System.out.println(so.splitWays(str6));
         System.out.println(so.splitWays(str7));
+        System.out.println(so.splitWays(str8));
     }
 }
