@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SplitIntoPrimes {
+    private static int modulo = 1000000007;
+
     public int splitWays(String str) {
         if (str == null || str.length() == 0) {
             return 0;
@@ -17,18 +19,19 @@ public class SplitIntoPrimes {
         for (int i = len - 1; i >= 0; i--) {
             int val = 0;
 
-//            if (str.charAt(i) == '0') {
-//                continue;
-//            }
+            if (str.charAt(i) == '0') {
+                continue;
+            }
 
             for (int j = i; j < len; j++) {
                 val = val * 10 + str.charAt(j) - '0';
-                if (val < 0) {
+                if (val > 1e6) {
                     break;
                 }
 
                 if (isPrime(val, primes)) {
                     dp[i] += dp[j + 1];
+                    dp[i] %= modulo;
                 }
             }
         }
@@ -60,7 +63,7 @@ public class SplitIntoPrimes {
         String str = "11373";
         String str2 = "2222";
         String str3 = "142857";
-        String str4 = "13131313131311313131313131313";
+        String str4 = "3737373737373737373737373737373737373737373737373737373737";
         String str5 = "3175";
         String str6 = "10101";
         String str7 = "101101";
