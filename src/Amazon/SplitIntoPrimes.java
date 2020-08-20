@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SplitIntoPrimes {
-    private static int modulo = 1000000007;
+    private static final int modulo = 1000000007;
 
     public int splitWays(String str) {
         if (str == null || str.length() == 0) {
