@@ -54,6 +54,7 @@ public class LC0403 {
         }
 
         int len = stones.length;
+        // index = stone, key = lastStep, value = canCross
         Map<Integer, Boolean>[] mem = new HashMap[len];
         for (int i = 0; i < len; i++) {
             mem[i] = new HashMap<>();
