@@ -55,51 +55,6 @@ public class LC0339 {
 
         return sum;
     }
-
-
-    /**
-     * Follow up:
-     * The weight of each level is reversed.
-     * For example:
-     *          2           level 1, weight 2
-     *        /   \
-     *   [1, 1]  [1, 1]     level 2, weight 1
-     */
-    public int followUp(List<NestedInteger> nestedList) {
-        if (nestedList == null) {
-            throw new IllegalArgumentException();
-        }
-        if (nestedList.size() == 0) {
-            return 0;
-        }
-
-        Queue<NestedInteger> que = new LinkedList<>();
-        for (NestedInteger nest : nestedList) {
-            que.offer(nest);
-        }
-
-        int unweightedSum = 0;
-        int res = 0;
-        while (!que.isEmpty()) {
-            int size = que.size();
-            int levelSum = 0;
-            for (int i = 0; i < size; i++) {
-                NestedInteger cur = que.poll();
-                if (cur.isInteger()) {
-                    levelSum += cur.getInteger();
-                } else {
-                    for (NestedInteger next : cur.getList()) {
-                        que.offer(next);
-                    }
-                }
-            }
-
-            unweightedSum += levelSum;
-            res += unweightedSum;
-        }
-
-        return res;
-    }
 }
 
 interface NestedInteger {
