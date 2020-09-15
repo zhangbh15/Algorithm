@@ -3,11 +3,25 @@ package LeetCode;
 import java.util.*;
 
 /**
+ * In a map with walls, determine if the thief can reach the money without being caught by the guard.
+ *                {{'T', ' ', ' ', 'X', ' '},
+ *                 {' ', 'X', ' ', 'X', ' '},
+ *                 {' ', 'X', 'G', 'X', ' '},
+ *                 {' ', 'X', ' ', 'X', ' '},
+ *                 {' ', 'X', 'M', 'X', ' '},
+ *                 {' ', 'X', ' ', 'X', ' '},
+ *                 {' ', 'X', ' ', ' ', ' '},
+ *                 {' ', ' ', ' ', ' ', ' '}};
+ *
  * Assumptions:
  *      The size of the map: 0 < size < 46340
  *      The thief and the guard take a random move in each round, not necessarily in the direction of shortest path.
  *      The thief and the guard cannot stay at the same position for 2 rounds.
  *      There can be more than 1 positions with money.
+ *
+ * In fact, the thief and guard should take an optimized move in each round.
+ * However, there are many ambiguous points about this question.
+ * Clarify carefully if met in interview.
  */
 public class AvoidGuard {
     public boolean canWin(char[][] matrix, int[] thief, int[] guard) {
