@@ -36,7 +36,7 @@ public class LC0387 {
 
     public int onePass(String s) {
         Queue<Integer> que = new LinkedList<>();
-        // null: no appearance, false: appear once, true: more than once
+        // null: haven't appeared, false: appeared once, true: appeared more than once
         Boolean[] visited = new Boolean[26];
 
         for (int i = 0; i < s.length(); i++) {
