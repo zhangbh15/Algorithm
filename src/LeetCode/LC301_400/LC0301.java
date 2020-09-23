@@ -91,6 +91,50 @@ public class LC0301 {
         }
     }
 
+
+    private void dfsList(List<String> res, String s, StringBuilder sb, int idx, int removeLeft, int removeRight, int delta) {
+        if (idx == s.length() && removeLeft == 0 && removeRight == 0 && delta == 0) {
+            res.add(sb.toString());
+            return;
+        }
+        if (idx == s.length() || removeLeft < 0 || removeRight < 0 || delta < 0) {
+            return;
+        }
+
+        char ch = s.charAt(idx);
+        if (ch == '(') {
+            // keep the '('
+            int setBackLen = sb.length();
+            int next = idx;
+            while (next < s.length() && s.charAt(next) == '(') {
+                sb.append('(');
+                next++;
+            }
+            dfsList(res, s, sb, next, removeLeft, removeRight, delta + next - idx);
+            sb.setLength(setBackLen);
+
+            // remove the '("
+            dfsList(res, s, sb, idx + 1, removeLeft - 1, removeRight, delta);
+        } else if (ch == ')') {
+            // keep the ')'
+            int setBackLen = sb.length();
+            int next = idx;
+            while (next < s.length() && s.charAt(next) == ')') {
+                sb.append(')');
+                next++;
+            }
+            dfsList(res, s, sb, next, removeLeft, removeRight, delta - next + idx);
+            sb.setLength(setBackLen);
+
+            // remove the ')'
+            dfsList(res, s, sb,idx + 1, removeLeft, removeRight - 1, delta);
+        } else {
+            sb.append(ch);
+            dfsList(res, s, sb, idx + 1, removeLeft, removeRight, delta);
+            sb.setLength(sb.length() - 1);
+        }
+    }
+
     public static void main(String[] args) {
         LC0301 so = new LC0301();
         String str1 = "()())()";
