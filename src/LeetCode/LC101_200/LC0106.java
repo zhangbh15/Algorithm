@@ -23,7 +23,7 @@ import java.util.*;
  *     /  \
  *    15   7
  */
-public class LC106 {
+public class LC0106 {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         if (inorder == null || postorder == null
                 || inorder.length != postorder.length || inorder.length == 0 ) {
