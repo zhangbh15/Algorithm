@@ -91,6 +91,90 @@ public class LC0417 {
         }
     }
 
+
+
+    // another version with post processing
+    public List<List<Integer>> pacificAtlanticV2(int[][] matrix) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {
+            return res;
+        }
+
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        Queue<Integer> que = new LinkedList<>();
+        boolean[][] canFlowPacific = new boolean[rows][cols];
+        boolean[][] canFlowAtlantic = new boolean[rows][cols];
+
+        fillPacific(que, canFlowPacific, matrix);
+        bfs(canFlowPacific, que, matrix);
+
+        fillAtlantic(que, canFlowAtlantic, matrix);
+        bfs(canFlowAtlantic, que, matrix);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (canFlowPacific[i][j] && canFlowAtlantic[i][j]) {
+                    res.add(Arrays.asList(i, j));
+                }
+            }
+        }
+
+        return res;
+    }
+
+    private void bfs(boolean[][] canFlow, Queue<Integer> que, int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        while (!que.isEmpty()) {
+            int cur = que.poll();
+            int i = cur / cols;
+            int j = cur % cols;
+
+            for (int[] dir : DIRECTIONS) {
+                int ii = i + dir[0];
+                int jj = j + dir[1];
+                if (ii >= 0 && ii < rows && jj >= 0 && jj < cols &&
+                        !canFlow[ii][jj] && matrix[ii][jj] >= matrix[i][j]) {
+                    que.offer(ii * cols + jj);
+                    canFlow[ii][jj] = true;
+                }
+            }
+        }
+    }
+
+    private void fillPacific(Queue<Integer> que, boolean[][] canFlow, int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            que.offer(i * cols);
+            canFlow[i][0] = true;
+        }
+        for (int j = 1; j < cols; j++) {
+            que.offer(j);
+            canFlow[0][j] = true;
+        }
+    }
+
+    private void fillAtlantic(Queue<Integer> que, boolean[][] canFlow, int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        for (int i = 0; i < rows; i++) {
+            que.offer(i * cols + cols - 1);
+            canFlow[i][cols - 1] = true;
+        }
+        for (int j = 0; j < cols - 1; j++) {
+            que.offer((rows - 1) * cols + j);
+            canFlow[rows - 1][j] = true;
+        }
+    }
+
+
+
     public static void main(String[] args) {
         LC0417 so = new LC0417();
         int[][] matrix = {{1,2,2,3,5}, {3,2,3,4,4}, {2,4,5,3,1}, {6,7,1,4,5}, {5,1,1,2,4}};

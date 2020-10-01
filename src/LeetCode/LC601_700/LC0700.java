@@ -36,6 +36,8 @@ public class LC0700 {
             return root;
         }
 
-        return root.val > val ? searchBST(root.left, val) : searchBST(root.right, val);
+        return root.val > val ?
+                searchBST(root.left, val) :
+                searchBST(root.right, val);
     }
 }
