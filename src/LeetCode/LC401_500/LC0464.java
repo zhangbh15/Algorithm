@@ -49,16 +49,43 @@ public class LC0464 {
             return false;
         }
 
-        int pool = 0;
-        for (int i = 1; i <= maxChoosableInteger; i++) {
-            pool = (pool + 1) << 1;
-        }
+        int pool = (1 << maxChoosableInteger) - 1;
+        Boolean[] mem = new Boolean[pool + 1];
 
-        Map<Integer, Boolean> mem = new HashMap<>();
-
-        return dfs(mem, pool, desiredTotal);
+        return dfs(pool, 0, desiredTotal, maxChoosableInteger, mem);
     }
 
+    // The searching status doesn't need to include target.
+    // The status of pool can fully represent the searching status.
+    private boolean dfs(int pool, int curSum, int desiredTotal, int maxChoosable, Boolean[] mem) {
+        if (mem[pool] != null) {
+            return mem[pool];
+        }
+        if (curSum >= desiredTotal) {
+            return false;
+        }
+
+        for (int i = 1; i <= maxChoosable; i++) {
+            int mask = 1 << (i - 1); // shift 1 position
+
+            if ((pool & mask) != 0) {
+                pool ^= mask;
+                boolean ret = dfs(pool, curSum + i, desiredTotal, maxChoosable, mem);
+                pool ^= mask;
+
+                if (!ret) {
+                    mem[pool] = true;
+                    return true;
+                }
+            }
+        }
+
+        mem[pool] = false;
+        return false;
+    }
+
+
+    // A very bad solution
     private boolean dfs(Map<Integer, Boolean> mem, int pool, int target) {
         if (target <= 0) {
             return false; // current player looses
@@ -90,6 +117,8 @@ public class LC0464 {
         return false;
     }
 
+
+    // without pruning
     private boolean dfs(boolean[] pool, int curSum, int desiredTotal) {
         if (curSum >= desiredTotal) {
             return false;
