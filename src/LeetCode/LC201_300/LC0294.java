@@ -20,6 +20,18 @@ import java.util.*;
  * Derive your algorithm's runtime complexity.
  */
 public class LC0294 {
+    public boolean canWin(String board) {
+        if (board == null || board.length() == 0) {
+            throw new IllegalArgumentException();
+        }
+        if (board.length() < 2) {
+            return false;
+        }
+
+        HashMap<String, Boolean> mem = new HashMap<>();
+        return dfs(board.toCharArray(), mem);
+    }
+
     /* On current board, if the offensive can guarantee win. */
     private boolean dfs(char[] board, HashMap<String, Boolean> mem) { // if board shorter than 32, can use a Integer
         String str = String.valueOf(board);
@@ -36,15 +48,20 @@ public class LC0294 {
             if (board[i] == '+' && board[i+ 1] == '+') {
                 board[i] = '-';
                 board[i + 1] = '-';
+
                 boolean ret = dfs(board, mem);
+
                 board[i] = '+';
                 board[i + 1] = '+';
-                mem.put(str, ret);
+
                 if (!ret) {
+                    mem.put(str, true);
                     return true;
                 }
             }
         }
+
+        mem.put(str, false);
         return false;
     }
 
@@ -57,9 +74,47 @@ public class LC0294 {
         return true;
     }
 
-    public boolean canIWin(String board) {
-        // CC
-        HashMap<String, Boolean> mem = new HashMap<>();
-        return dfs(board.toCharArray(), mem);
+
+    /**
+     * If board is no longer than 32 characters.
+     */
+    public boolean canWinBool(String board) {
+        // cc
+        Map<Integer, Boolean> mem = new HashMap<>();
+        int bitBoard = 0;
+        for (int i = 0; i < board.length(); i++) {
+            if (board.charAt(i) == '+') {
+                bitBoard |= (1 << i);
+            }
+        }
+        return dfs(bitBoard, mem);
+    }
+
+    private boolean dfs(int bitBoard, Map<Integer, Boolean> mem) {
+        Boolean val = mem.get(bitBoard);
+        if (val != null) {
+            return val;
+        }
+
+        for (int i = 0; i < 31; i++) {
+            int mask1 = 1 << i;
+            int mask2 = 1 << i + 1;
+            if ((bitBoard & mask1) != 0 && (bitBoard & mask2) != 0) {
+                bitBoard ^= mask1;
+                bitBoard ^= mask2;
+
+                boolean ret = dfs(bitBoard, mem);
+
+                bitBoard ^= mask1;
+                bitBoard ^= mask2;
+                if (!ret) {
+                    mem.put(bitBoard, true);
+                    return true;
+                }
+            }
+        }
+
+        mem.put(bitBoard, false);
+        return false;
     }
 }
