@@ -164,7 +164,8 @@ public class LC0329 {
         return recoverAll(paths, maxStarts, rows, cols);
     }
 
-    private int dfsAllPath(Map<Integer, List<Integer>> path, int[][] matrix, int i, int j, int preVal, int[][] mem) {
+    private int dfsAllPath(Map<Integer, List<Integer>> path, int[][] matrix,
+                           int i, int j, int preVal, int[][] mem) {
         int rows = matrix.length;
         int cols = matrix[0].length;
         if (i < 0 || i >= rows || j < 0 || j >= cols || matrix[i][j] <= preVal) {
@@ -199,7 +200,8 @@ public class LC0329 {
         return mem[i][j];
     }
 
-    private List<List<int[]>> recoverAll(Map<Integer, List<Integer>> paths, List<Integer> starts, int rows, int cols) {
+    private List<List<int[]>> recoverAll(Map<Integer, List<Integer>> paths,
+                                         List<Integer> starts, int rows, int cols) {
         List<List<int[]>> res = new ArrayList<>();
         for (int start : starts) {
             List<int[]> path = new ArrayList<>();
@@ -209,7 +211,8 @@ public class LC0329 {
         return res;
     }
 
-    private void recoverSingle(List<List<int[]>> res, List<int[]> path, Map<Integer, List<Integer>> pathMap, int cur, int rows, int cols) {
+    private void recoverSingle(List<List<int[]>> res, List<int[]> path, Map<Integer,
+            List<Integer>> pathMap, int cur, int rows, int cols) {
         List<Integer> nexts = pathMap.get(cur);
         if (nexts == null) {
             res.add(new ArrayList<>(path));
@@ -223,6 +226,43 @@ public class LC0329 {
         }
     }
 
+
+    /**
+     * Followup 3: can only move right or downward.
+     */
+    public int longestPathTwoDir(int[][] matrix) {
+        // cc
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] dp = new int[rows][cols];
+
+        dp[0][0] = 1;
+        for (int i = 1; i < rows; i++) {
+            dp[i][0] = matrix[i][0] > matrix[i - 1][0] ? dp[i - 1][0] + 1 : 1;
+        }
+        for (int j = 1; j < cols; j++) {
+            dp[0][j] = matrix[0][j] > matrix[0][j - 1] ? dp[0][j - 1] + 1 : 1;
+        }
+
+        int max = 1;
+        for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
+                if (matrix[i][j] > matrix[i - 1][j] && matrix[i][j] > matrix[i][j - 1]) {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]) + 1;
+                } else if (matrix[i][j] > matrix[i - 1][j]) {
+                    dp[i][j] = dp[i - 1][j] + 1;
+                } else if (matrix[i][j] > matrix[i][j - 1]) {
+                    dp[i][j] = dp[i][j - 1] + 1;
+                } else {
+                    dp[i][j] = 1;
+                }
+
+                max = Math.max(max, dp[i][j]);
+            }
+        }
+
+        return max;
+    }
 
     public static void main(String[] args) {
         LC0329 so = new LC0329();
