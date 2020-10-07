@@ -183,6 +183,7 @@ public class LC0329 {
 
             int pathLen = dfsAllPath(path, matrix, ii, jj, matrix[i][j], mem);
 
+            // record the edges with longest LIS to build graph
             if (pathLen > maxLen) {
                 maxLen = pathLen;
                 maxPositions = new ArrayList<>();
