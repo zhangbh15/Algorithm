@@ -33,16 +33,21 @@ package LeetCode.LC1_100;
  */
 public class LC0072 {
     // DFS, Time Limit Exceeded on LeetCode
+    public int minDistanceDFS(String word1, String word2) {
+        if (word1 == null || word2 == null) {
+            return -1;
+        }
+        return dfs(word1, word2, 0, 0);
+    }
+
     private int dfs(String word, String target, int i, int j) {
         int wordLen = word.length();
         int targetLen = target.length();
-        if (i == wordLen && j == targetLen) { // success
-            return 0;
-        }
-        if (i >= wordLen) { // must add char
+
+        if (i == wordLen) { // must add char
             return targetLen - j;
         }
-        if (j >= targetLen) { // must delete
+        if (j == targetLen) { // must delete
             return wordLen - i;
         }
 
@@ -53,24 +58,33 @@ public class LC0072 {
                 dfs(word, target, i + 1, j)),  // delete
                 dfs(word, target, i + 1, j + 1)); // replace
     }
-    public int minDistanceDFS(String word1, String word2) {
+
+
+
+    // DFS with Pruning, 4ms on LeetCode
+    public int minDistancePruning(String word1, String word2) {
         if (word1 == null || word2 == null) {
             return -1;
         }
-        return dfs(word1, word2, 0, 0);
+        int len1 = word1.length();
+        int len2 = word2.length();
+        int[][] mem = new int[len1][len2];
+        for (int i = 0; i < len1; i++) {
+            for (int j = 0; j < len2; j++) {
+                mem[i][j] = -1;
+            }
+        }
+        return pruning(word1, word2, 0, 0, mem);
     }
 
-    // DFS with Pruning, 4ms on LeetCode
     private int pruning(String word, String target, int i, int j, int[][] mem) {
         int wordLen = word.length();
         int targetLen = target.length();
-        if (i == wordLen && j == targetLen) { // success
-            return 0;
-        }
-        if (i >= wordLen) { // must add char
+
+        if (i == wordLen) { // must add char
             return targetLen - j;
         }
-        if (j >= targetLen) { // must delete
+        if (j == targetLen) { // must delete
             return wordLen - i;
         }
 
@@ -86,20 +100,8 @@ public class LC0072 {
 
         return mem[i][j];
     }
-    public int minDistancePruning(String word1, String word2) {
-        if (word1 == null || word2 == null) {
-            return -1;
-        }
-        int len1 = word1.length();
-        int len2 = word2.length();
-        int[][] mem = new int[len1][len2];
-        for (int i = 0; i < len1; i++) {
-            for (int j = 0; j < len2; j++) {
-                mem[i][j] = -1;
-            }
-        }
-        return pruning(word1, word2, 0, 0, mem);
-    }
+
+
 
     // DP, 5ms on LeetCode
     public int minDistanceDP(String word1, String word2) {
