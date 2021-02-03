@@ -1,13 +1,19 @@
 # Algorithm 
 
-This repo contains codes for some important and frequently asked problems in interviews.
+This repo contains codes for some important or frequently raised problems in interviews.
 
-The codes are classified according to the resource:
-LeetCode, LintCode, interview and OA questions (labeled with company name), OODesign
+### Contents
 
-Some miscellaneous problems are included under the LeetCode folder.
+* Amazon    
+(popular OA or interview problems at Amazon)
+* LeetCode  
+(LeetCode problems, including some unlabeled problems)
+* LintCode  
+(LintCode problems)
+* OOD       
+(Obejct Oriented Design)
 
-Contents in this repo are to be modified, updated and extended.
+Some unlabeled problems are included under the LeetCode folder.
 
 
 ### LeetCode.util
@@ -18,7 +24,7 @@ of local coding and debugging.
 
 Currently implemented classes include: ListNode, Pair, TreeNode.
 
-The above classes also implemented some useful methods for debugging. 
+The above classes also provide some useful methods for debugging. 
 See their comment docs for more details.
 Other less commonly used classes are implemented within specific questions.
 
